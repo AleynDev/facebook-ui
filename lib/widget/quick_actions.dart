@@ -7,34 +7,38 @@ class QuickActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-
       // El widget FittedBox escala el contenido dependiendo de la pantalla
       // donde se renderice, con la propiedad fit, podemos elegir la forma de
       // renderizado. En este caso scaleDown solo actúa cuando tenemos error
       // de overflow, sino, mantiene la relación de aspecto original.
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        alignment: Alignment.centerLeft,
-        child: Row(
-          children: const [
-            _QuickButton(
-              iconData: Icons.photo_library_rounded,
-              label: 'Gallery',
-              color: Color(0xff92be87),
-            ),
-            SizedBox(width: 15),
-            _QuickButton(
-              iconData: Icons.supervised_user_circle_sharp,
-              label: 'Tag Friends',
-              color: Color(0xff7bbaff),
-            ),
-            SizedBox(width: 15),
-            _QuickButton(
-              iconData: Icons.video_call_outlined,
-              label: 'Live',
-              color: Color(0xfffe7574),
-            ),
-          ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+        ),
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Row(
+            children: const [
+              _QuickButton(
+                iconData: Icons.photo_library_rounded,
+                label: 'Gallery',
+                color: Color(0xff92be87),
+              ),
+              SizedBox(width: 15),
+              _QuickButton(
+                iconData: Icons.supervised_user_circle_sharp,
+                label: 'Tag Friends',
+                color: Color(0xff7bbaff),
+              ),
+              SizedBox(width: 15),
+              _QuickButton(
+                iconData: Icons.video_call_outlined,
+                label: 'Live',
+                color: Color(0xfffe7574),
+              ),
+            ],
+          ),
         ),
       ),
     );
