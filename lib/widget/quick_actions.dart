@@ -6,36 +6,47 @@ class QuickActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: const [
-        QuickButton(
-          iconData: Icons.photo_library_rounded,
-          label: 'Gallery',
-          color: Color(0xff92be87),
+    return SafeArea(
+
+      // El widget FittedBox escala el contenido dependiendo de la pantalla
+      // donde se renderice, con la propiedad fit, podemos elegir la forma de
+      // renderizado. En este caso scaleDown solo actúa cuando tenemos error
+      // de overflow, sino, mantiene la relación de aspecto original.
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        alignment: Alignment.centerLeft,
+        child: Row(
+          children: const [
+            _QuickButton(
+              iconData: Icons.photo_library_rounded,
+              label: 'Gallery',
+              color: Color(0xff92be87),
+            ),
+            SizedBox(width: 15),
+            _QuickButton(
+              iconData: Icons.supervised_user_circle_sharp,
+              label: 'Tag Friends',
+              color: Color(0xff7bbaff),
+            ),
+            SizedBox(width: 15),
+            _QuickButton(
+              iconData: Icons.video_call_outlined,
+              label: 'Live',
+              color: Color(0xfffe7574),
+            ),
+          ],
         ),
-        SizedBox(width: 10),
-        QuickButton(
-          iconData: Icons.supervised_user_circle_sharp,
-          label: 'Tag Friends',
-          color: Color(0xff7bbaff),
-        ),
-        SizedBox(width: 10),
-        QuickButton(
-          iconData: Icons.video_call_outlined,
-          label: 'Live',
-          color: Color(0xfffe7574),
-        ),
-      ],
+      ),
     );
   }
 }
 
-class QuickButton extends StatelessWidget {
+class _QuickButton extends StatelessWidget {
   final IconData iconData;
   final String label;
   final Color color;
 
-  const QuickButton({
+  const _QuickButton({
     Key? key,
     required this.iconData,
     required this.color,
@@ -51,12 +62,13 @@ class QuickButton extends StatelessWidget {
         color: color.withOpacity(0.15),
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           CircleButton(
             color: color,
             iconData: iconData,
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Text(
             label,
             style: TextStyle(
