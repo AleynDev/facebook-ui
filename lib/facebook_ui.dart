@@ -1,14 +1,39 @@
+import 'package:facebook_ui/models/publication.dart';
 import 'package:facebook_ui/widget/circle_button.dart';
+import 'package:facebook_ui/widget/publication_item.dart';
 import 'package:facebook_ui/widget/quick_actions.dart';
 import 'package:facebook_ui/widget/stories.dart';
 import 'package:facebook_ui/widget/what_is_on_your_mind.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:faker/faker.dart';
 
 class FacebookUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final faker = Faker();
+    final publications = <Publication>[];
+    const reactions = Reaction.values;
+
+    for (int i = 0; i < 50; i++) {
+      final random = faker.randomGenerator;
+      final reactionIndex = random.integer(reactions.length - 1);
+      final publication = Publication(
+        user: User(
+          avatar: faker.image.image(),
+          username: faker.person.name(),
+        ),
+        title: faker.lorem.sentence(),
+        createdAt: faker.date.dateTime(),
+        imageUrl: faker.image.image(),
+        commentsCount: random.integer(50000),
+        sharesCount: random.integer(50000),
+        currentUserReaction: reactions[reactionIndex],
+      );
+      publications.add(publication);
+    }
+
     return Scaffold(
       appBar: AppBar(
         systemOverlayStyle: const SystemUiOverlayStyle(
@@ -52,15 +77,24 @@ class FacebookUi extends StatelessWidget {
         // ).copyWith(
         //   top: 15,
         // ),
-        children: const [
-          SizedBox(height: 10),
-          WhatIsOnYourMind(
+        children: [
+          const SizedBox(height: 10),
+          const WhatIsOnYourMind(
             userName: 'Lisa',
           ),
-          SizedBox(height: 20),
-          QuickActions(),
-          SizedBox(height: 20),
-          Stories(),
+          const SizedBox(height: 20),
+          const QuickActions(),
+          const SizedBox(height: 20),
+          const Stories(),
+          const SizedBox(height: 20),
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (_, index) => PublicationItem(
+              publication: publications[index],
+            ),
+            itemCount: publications.length,
+          ),
         ],
       ),
     );
