@@ -26,6 +26,9 @@ class Avatar extends StatelessWidget {
     //   ),
     // );
 
+    final bool fromNetwork = asset.startsWith('http://') || asset.startsWith('https://');
+    final imageProvider = fromNetwork ? NetworkImage(asset) : AssetImage(asset);
+
     return Container(
       width: size,
       height: size,
@@ -35,7 +38,10 @@ class Avatar extends StatelessWidget {
           width: borderWidth,
           color: Colors.white,
         ),
-        image: DecorationImage(image: AssetImage(asset), fit: BoxFit.contain),
+        image: DecorationImage(
+          image: imageProvider as ImageProvider,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
