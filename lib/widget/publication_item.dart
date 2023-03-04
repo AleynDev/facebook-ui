@@ -49,6 +49,14 @@ class PublicationItem extends StatelessWidget {
 
     return Container(
       width: double.infinity,
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            width: 6,
+            color: Colors.grey.withOpacity(0.2),
+          )
+        )
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -69,11 +77,13 @@ class PublicationItem extends StatelessWidget {
               ],
             ),
           ),
-          CachedNetworkImage(
-            imageUrl: publication.imageUrl,
-            height: 180,
-            width: double.infinity,
-            fit: BoxFit.cover,
+          AspectRatio(
+            aspectRatio: 16 / 9,
+            child: CachedNetworkImage(
+              imageUrl: publication.imageUrl,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
           Padding(
             padding: padding.copyWith(
@@ -81,6 +91,9 @@ class PublicationItem extends StatelessWidget {
             ),
             child: Text(
               publication.title,
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
           Padding(
@@ -94,7 +107,7 @@ class PublicationItem extends StatelessWidget {
                   children: [
                     ...List.generate(
                       reactions.length,
-                          (index) {
+                      (index) {
                         final reaction = reactions[index];
                         final isActive =
                             reaction == publication.currentUserReaction;
